@@ -2,8 +2,9 @@
   <div class="container">
     <a class="navbar-brand" href="#">Entertainment Portal</a>
     <ul class="nav navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Movies <span class="sr-only">(current)</span></a>
+      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a routerLink="/movies" class="nav-link" [routerLinkActive]="'active'">Movies
+          <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Contact</a>
