@@ -5,7 +5,6 @@ html {
   min-height: 100%;
 }
 body {
-  padding-top: 4rem;
   min-height: 100%;
   overflow:hidden;
 }
@@ -17,4 +16,21 @@ body {
   line-height: 60px;
   background-color: #f5f5f5;
   text-align: center;
+}
+
+.full-container-spinner{
+  position: absolute;
+  top: 0;
+  left:0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  background-color: deepskyblue;
+  padding: 10px;
+  color: white;
+  min-height: 100%;
+}
+
+.container-no-content{
+  min-height: 500px;
 }

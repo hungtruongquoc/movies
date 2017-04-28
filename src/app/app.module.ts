@@ -1,27 +1,29 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { RouterModule, Routes } from '@angular/router';
-import { StoreModule } from '@ngrx/store';
-import { RouterStoreModule } from '@ngrx/router-store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {HttpModule} from '@angular/http';
+import {RouterModule, Routes} from '@angular/router';
+import {StoreModule} from '@ngrx/store';
+import {RouterStoreModule} from '@ngrx/router-store';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 
-import { reducer } from './reducers';
-import { MovieService } from './sevices/movies';
+import reducer  from './reducers';
+import {MovieService} from './sevices/movies';
 
-import { AppComponent } from './app.component';
-import { NavComponent } from './nav/nav.component';
-import { FooterComponent } from './footer/footer.component';
-import { MovieComponent } from './movie/movie.component';
+import {AppComponent} from './app.component';
+import {NavComponent} from './nav/nav.component';
+import {FooterComponent} from './footer/footer.component';
+import {MovieComponent} from './movie/movie.component';
 import {NotFoundPageComponent} from "./common/no-found-page";
-import { MovieItemComponent } from './movie-item/movie-item.component';
+import {MovieItemComponent} from './movie-item/movie-item.component';
+import {Actions, EffectsModule} from "@ngrx/effects";
 import {MovieEffects} from "./effects/movie";
-import {EffectsModule} from "@ngrx/effects";
+import {AppStateActions} from "./actions/application";
+import {AppEffects} from "./effects/application";
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'movies', pathMatch: 'full'},
-  { path: 'movies', component: MovieComponent },
+  {path: '', redirectTo: 'movies', pathMatch: 'full'},
+  {path: 'movies', component: MovieComponent},
   {
     path: '**',
     component: NotFoundPageComponent
@@ -49,18 +51,8 @@ const appRoutes: Routes = [
      * based application.
      */
     StoreModule.provideStore(reducer),
-    /**
-     * @ngrx/router-store keeps router state up-to-date in the store and uses
-     * the store as the single source of truth for the router's state.
-     */
-    RouterStoreModule.connectRouter(),
-    /**
-     * EffectsModule.run() sets up the effects class to be initialized
-     * immediately when the application starts.
-     *
-     * See: https://github.com/ngrx/effects/blob/master/docs/api.md#run
-     */
     EffectsModule.run(MovieEffects),
+    EffectsModule.run(AppEffects),
     /**
      * Store devtools instrument the store retaining past versions of state
      * and recalculating new states. This enables powerful time-travel
@@ -74,7 +66,7 @@ const appRoutes: Routes = [
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
     RouterModule.forRoot(appRoutes),
   ],
-  providers: [MovieService],
+  providers: [MovieService, AppStateActions],
   bootstrap: [AppComponent]
 })
 export class AppModule {

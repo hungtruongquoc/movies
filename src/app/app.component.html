@@ -1,16 +1,9 @@
-
-<ng-container *ngIf="preLoadingCompleted; else loading">
-  <app-nav></app-nav>
-  <div class="container">
-    <div class="starter-template">
-      <router-outlet></router-outlet>
+<app-nav></app-nav>
+<div class="container" [ngClass]="{'container-no-content': preLoadingCompleted | async}">
+  <router-outlet></router-outlet>
+  <div class="row full-container-spinner" *ngIf="preLoadingCompleted | async">
+    <div class="col-12 text-center" style="margin: auto">
+      <h3><i class="fa fa-fw fa-spinner fa-spin fa-2x"></i> Loading essential configuration ...</h3>
     </div>
   </div>
-</ng-container>
-<ng-template #loading>
-  <div class="text-center">
-    <i class="fa fa-spinner fa-spin fa-2x fa-fw"></i>
-    <span class="sr-only">Loading...</span>
-    Loading essential configuration ...
-  </div>
-</ng-template>
+</div>

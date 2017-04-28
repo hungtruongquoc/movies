@@ -38,23 +38,23 @@ import * as movie from '../actions/movie';
 @Injectable()
 export class MovieEffects {
 
-  @Effect()
-  search$: Observable<Action> = this.actions$
-    .ofType(movie.SEARCH)
-    .debounceTime(300)
-    .map(toPayload)
-    .switchMap(query => {
-      if (query === '') {
-        return empty();
-      }
-
-      const nextSearch$ = this.actions$.ofType(movie.SEARCH).skip(1);
-
-      return this.movies.searchMovies(query)
-        .takeUntil(nextSearch$)
-        .map(movies => new movie.SearchCompleteAction(movies))
-        .catch(() => of(new movie.SearchCompleteAction([])));
-    });
+  // @Effect()
+  // search$: Observable<Action> = this.actions$
+  //   .ofType(movie.SEARCH)
+  //   .debounceTime(300)
+  //   .map(toPayload)
+  //   .switchMap(query => {
+  //     if (query === '') {
+  //       return empty();
+  //     }
+  //
+  //     const nextSearch$ = this.actions$.ofType(movie.SEARCH).skip(1);
+  //
+  //     return this.movies.searchMovies(query)
+  //       .takeUntil(nextSearch$)
+  //       .map(movies => new movie.SearchCompleteAction(movies))
+  //       .catch(() => of(new movie.SearchCompleteAction([])));
+  //   });
 
   constructor(private actions$: Actions, private movies: MovieService) { }
 }
