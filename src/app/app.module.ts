@@ -20,6 +20,10 @@ import {Actions, EffectsModule} from "@ngrx/effects";
 import {MovieEffects} from "./effects/movie";
 import {AppStateActions} from "./actions/application";
 import {AppEffects} from "./effects/application";
+import {MovieStateActions} from "./actions/movie";
+import {ApplicationService} from "./sevices/application";
+import { PaginationComponent } from './pagination/pagination.component';
+import { PaginationButtonComponent } from './pagination/pagination-button/pagination-button.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: 'movies', pathMatch: 'full'},
@@ -37,7 +41,9 @@ const appRoutes: Routes = [
     FooterComponent,
     MovieComponent,
     NotFoundPageComponent,
-    MovieItemComponent
+    MovieItemComponent,
+    PaginationComponent,
+    PaginationButtonComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +72,7 @@ const appRoutes: Routes = [
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
     RouterModule.forRoot(appRoutes),
   ],
-  providers: [MovieService, AppStateActions],
+  providers: [MovieService, AppStateActions, MovieStateActions, ApplicationService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -6,7 +6,6 @@ html {
 }
 body {
   min-height: 100%;
-  overflow:hidden;
 }
 .footer {
   position: absolute;

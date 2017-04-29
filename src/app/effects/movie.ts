@@ -15,7 +15,7 @@ import { empty } from 'rxjs/observable/empty';
 import { of } from 'rxjs/observable/of';
 
 import { MovieService } from '../sevices/movies';
-import * as movie from '../actions/movie';
+import { MovieStateActions } from '../actions/movie';
 
 
 /**
@@ -38,23 +38,12 @@ import * as movie from '../actions/movie';
 @Injectable()
 export class MovieEffects {
 
-  // @Effect()
-  // search$: Observable<Action> = this.actions$
-  //   .ofType(movie.SEARCH)
-  //   .debounceTime(300)
-  //   .map(toPayload)
-  //   .switchMap(query => {
-  //     if (query === '') {
-  //       return empty();
-  //     }
-  //
-  //     const nextSearch$ = this.actions$.ofType(movie.SEARCH).skip(1);
-  //
-  //     return this.movies.searchMovies(query)
-  //       .takeUntil(nextSearch$)
-  //       .map(movies => new movie.SearchCompleteAction(movies))
-  //       .catch(() => of(new movie.SearchCompleteAction([])));
-  //   });
+  @Effect()
+  search$: Observable<Action> = this.actions$
+    .ofType(MovieStateActions.LOAD_MOVIES)
+    .switchMap(query => {return this.movies.searchMovies();})
+    .map(movies => this.movieAction.loadMovieListSuccess(movies))
+    .catch(() => of(this.movieAction.loadMovieListSuccess([])));
 
-  constructor(private actions$: Actions, private movies: MovieService) { }
+  constructor(private actions$: Actions, private movieAction: MovieStateActions, private movies: MovieService) { }
 }

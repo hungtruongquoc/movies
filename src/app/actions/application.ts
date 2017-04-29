@@ -17,4 +17,17 @@ export class AppStateActions {
       payload: configuration
     }
   }
+  static LOAD_GENRE = '[Configuration] Load Genre Items';
+  loadGenre(): Action {
+    return {
+      type: AppStateActions.LOAD_GENRE
+    }
+  }
+  static LOAD_GENRE_SUCCESS = '[Configuration] Load Genre Success';
+  loadGenreSuccess(genreList): Action {
+    return {
+      type: AppStateActions.LOAD_GENRE_SUCCESS,
+      payload: genreList
+    }
+  }
 }

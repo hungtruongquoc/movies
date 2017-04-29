@@ -10,4 +10,7 @@ export class AppEffects {
   @Effect() loadConfiguration$ = this.update$.ofType(AppStateActions.LOAD_CONFIGURATION)
     .switchMap(()=>this.service.getConfiguration())
     .map(configuration => this.appAction.loadConfigurationSuccess(configuration));
+  @Effect() loadGenre = this.update$.ofType(AppStateActions.LOAD_GENRE)
+    .switchMap(()=>this.service.getGenre())
+    .map(genreList => this.appAction.loadGenreSuccess(genreList))
 }

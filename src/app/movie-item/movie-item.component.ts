@@ -11,7 +11,9 @@ export class MovieItemComponent implements OnInit {
   @Input()
   data: Movie = null;
 
-  constructor() { }
+  constructor() {
+
+  }
 
   ngOnInit() {
   }
