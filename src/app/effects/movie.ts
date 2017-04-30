@@ -7,15 +7,16 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/takeUntil';
-import { Injectable } from '@angular/core';
-import { Effect, Actions, toPayload } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
-import { empty } from 'rxjs/observable/empty';
-import { of } from 'rxjs/observable/of';
+import {Injectable} from '@angular/core';
+import {Effect, Actions, toPayload} from '@ngrx/effects';
+import {Action} from '@ngrx/store';
+import {Observable} from 'rxjs/Observable';
+import {empty} from 'rxjs/observable/empty';
+import {of} from 'rxjs/observable/of';
 
-import { MovieService } from '../sevices/movies';
-import { MovieStateActions } from '../actions/movie';
+import {MovieService} from '../sevices/movies';
+import {MovieStateActions} from '../actions/movie';
+import {map} from "rxjs/operator/map";
 
 
 /**
@@ -41,9 +42,19 @@ export class MovieEffects {
   @Effect()
   search$: Observable<Action> = this.actions$
     .ofType(MovieStateActions.LOAD_MOVIES)
-    .switchMap(query => {return this.movies.searchMovies();})
+    .switchMap(() => {
+      return this.movies.searchMovies();
+    })
     .map(movies => this.movieAction.loadMovieListSuccess(movies))
     .catch(() => of(this.movieAction.loadMovieListSuccess([])));
 
-  constructor(private actions$: Actions, private movieAction: MovieStateActions, private movies: MovieService) { }
+  @Effect()
+  detail$: Observable<Action> = this.actions$.ofType(MovieStateActions.LOAD_MOVIE)
+    .map(action => action.payload)
+    .switchMap((movieId) => this.movies.retrieveMovie(movieId))
+    .map(movie => this.movieAction.loadMovieSuccess(movie))
+    .catch(() => of(this.movieAction.loadMovieSuccess(null)));
+
+  constructor(private actions$: Actions, private movieAction: MovieStateActions, private movies: MovieService) {
+  }
 }

@@ -24,6 +24,9 @@ import {MovieStateActions} from "./actions/movie";
 import {ApplicationService} from "./sevices/application";
 import { PaginationComponent } from './pagination/pagination.component';
 import { PaginationButtonComponent } from './pagination/pagination-button/pagination-button.component';
+import {NgPipesModule} from "angular-pipes";
+import { LessMoreTextComponent } from './common/less-more-text/less-more-text.component';
+import { BootstrapSimpleCardComponent } from './common/bootstrap-simple-card/bootstrap-simple-card.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: 'movies', pathMatch: 'full'},
@@ -43,7 +46,9 @@ const appRoutes: Routes = [
     NotFoundPageComponent,
     MovieItemComponent,
     PaginationComponent,
-    PaginationButtonComponent
+    PaginationButtonComponent,
+    LessMoreTextComponent,
+    BootstrapSimpleCardComponent
   ],
   imports: [
     BrowserModule,
@@ -71,6 +76,7 @@ const appRoutes: Routes = [
      */
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
     RouterModule.forRoot(appRoutes),
+    NgPipesModule
   ],
   providers: [MovieService, AppStateActions, MovieStateActions, ApplicationService],
   bootstrap: [AppComponent]

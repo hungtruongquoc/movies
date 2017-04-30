@@ -5,6 +5,8 @@ import {Http} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
 import {Movie} from "../models/movie";
 import 'rxjs/operator/combineAll';
+import * as moment from 'moment';
+import {Action} from "@ngrx/store";
 
 @Injectable()
 export class MovieService {
@@ -22,19 +24,27 @@ export class MovieService {
 
   searchMovies(page: number = 1): Observable<Movie[]> {
     console.log('Load top rated movies ');
-    let searchUrl = `${MovieService.API_PATH}/movie/top_rated?api_key=${MovieService.API_KEY}&language=en-US&&page=${page}&region=US`;
+    let currentYear = moment().year() + '-1-1';
+    let searchUrl = `${MovieService.API_PATH}/discover/movie?api_key=${MovieService.API_KEY}&language=en-US&&page=${page}&region=US&sort_by=vote_average.desc&release_date.gte=${currentYear}&vote_count.gte=1000`;
     return this.http.get(searchUrl).map(res => {
       console.log('Top rated list result is: ', res);
       return res.json() || [];
     });
   }
 
-  retrieveMovie(movieId: string): Observable<Movie> {
-    let detailUrl = `${MovieService.API_PATH}/search/movie/${movieId}?api_key=${MovieService.API_KEY}&language=en-US`;
-    return this.http.get(detailUrl).map(res => {
-      console.log('Selected movie data from API: ', res);
-      return res.json();
-    });
+  retrieveMovie(movieId): Observable<any> {
+    console.log('Start loading movie ', movieId);
+    let paramType = typeof movieId;
+    if(paramType !== 'number'){
+      return Observable.of(Object.create({})).map(data => movieId.loadedMovie);
+    }
+    else {
+      let detailUrl = `${MovieService.API_PATH}/movie/${movieId}?api_key=${MovieService.API_KEY}&language=en-US`;
+      return this.http.get(detailUrl).map(res => {
+        console.log('Selected movie data from API: ', res);
+        return res.json() || null;
+      });
+    }
   }
 
   getConfiguration() {

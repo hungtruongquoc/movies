@@ -1,23 +1,65 @@
-<div class="card">
-  <div class="card-block">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-4">
-          <img [attr.src]="data.poster_path">
-        </div>
-        <div class="col-8">
-          <div class="row">
-            <div class="col-12">
-              <h3>{{data.title}}</h3>
-            </div>
+<app-bootstrap-simple-card>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-10" (click)="showDetail($event)">
+            <h3 class="hidden-sm-down">
+              <a class="movie-show-detail" [attr.data-id]="data.id" data-toggle="collapse"
+                 [attr.href]="'#movie' + data.id">{{data
+                .title}}</a>
+            </h3>
+            <h5 class="hidden-md-up">
+              <a class="movie-show-detail" [attr.data-id]="data.id" data-toggle="collapse"
+                 [attr.href]="'#movie' + data.id">{{data.title}}</a>
+            </h5>
           </div>
-          <div class="row">
-            <div class="col-12">
-              <p>{{data.vote_average}}</p>
-            </div>
+          <div class="col-2 text-right">
+            <h2 class="hidden-sm-down" [class.text-danger]="isNotGoodMovie()"
+                [class.text-success]="isGoodMovie()"
+                [class.text-warning]="isNormalMovie()">
+              {{data.vote_average | number:'1.1-1'}}</h2>
+            <h5 class="hidden-md-up" [class.text-danger]="isNotGoodMovie()"
+                [class.text-success]="isGoodMovie()"
+                [class.text-warning]="isNormalMovie()">
+              {{data.vote_average | number:'1.1-1'}}</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <p>Released on {{data.formattedReleaseDate}}, {{data.releaseDuration}}</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <a *ngFor="let genre of data.genres" href="#">
+              {{genre.name}}
+            </a>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</app-bootstrap-simple-card>
+<app-bootstrap-simple-card class="movie-detail" [attr.id]="'movie' + data.id" [class.show]="doShowDetail"
+                           [class.collapse]="!doShowDetail">
+  <div class="container-fluid" *ngIf="data && data !== null">
+    <div class="row">
+      <div class="col-4">
+        <img [attr.src]="data.poster_url">
+      </div>
+      <div class="col-8">
+        <div class="row hidden-sm-down">
+          {{data.overview}}
+        </div>
+        <div class="row hidden-md-up">
+          <app-less-more-text [text]="overview"></app-less-more-text>
+        </div>
+        <div class="row">
+          Length: {{data.runtime}}
+        </div>
+      </div>
+    </div>
+  </div>
+</app-bootstrap-simple-card>
+

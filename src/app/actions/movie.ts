@@ -18,4 +18,20 @@ export class MovieStateActions {
       payload: movies
     }
   }
+  static LOAD_MOVIE = '[Movie] Load detail of movie';
+  loadMovie(movieId) : Action {
+    console.log(MovieStateActions.LOAD_MOVIE, ' executed with id', movieId);
+    return {
+      type: MovieStateActions.LOAD_MOVIE,
+      payload: movieId
+    }
+  }
+  static LOAD_MOVIE_SUCCESS = '[Movie] Load detail of movie success';
+  loadMovieSuccess(movieDetail) : Action {
+    console.log(MovieStateActions.LOAD_MOVIE_SUCCESS, ' executed with detail', movieDetail);
+    return {
+      type: MovieStateActions.LOAD_MOVIE_SUCCESS,
+      payload: movieDetail
+    }
+  }
 }

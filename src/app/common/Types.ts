@@ -6,3 +6,7 @@ export interface IAppConfiguration {
 export interface IMovieSearchResult {
   [name: string]: any;
 }
+
+export interface IMovieDetail {
+  [name: string]: any;
+}

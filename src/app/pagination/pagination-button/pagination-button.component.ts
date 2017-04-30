@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostBinding, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: '[app-pagination-button]',
@@ -8,6 +8,12 @@ import { Component, OnInit } from '@angular/core';
 export class PaginationButtonComponent implements OnInit {
 
   constructor() { }
+
+  @Input()
+  ariaLabel: string = null;
+
+  @HostBinding('class.page-item')
+  isPageItem: boolean = true;
 
   ngOnInit() {
   }
