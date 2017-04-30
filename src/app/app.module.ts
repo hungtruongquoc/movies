@@ -27,6 +27,8 @@ import { PaginationButtonComponent } from './pagination/pagination-button/pagina
 import {NgPipesModule} from "angular-pipes";
 import { LessMoreTextComponent } from './common/less-more-text/less-more-text.component';
 import { BootstrapSimpleCardComponent } from './common/bootstrap-simple-card/bootstrap-simple-card.component';
+import { MovieDetailComponent } from './movie-item/movie-detail/movie-detail.component';
+import { LessMoreButtonComponent } from './common/less-more-button/less-more-button.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: 'movies', pathMatch: 'full'},
@@ -48,7 +50,9 @@ const appRoutes: Routes = [
     PaginationComponent,
     PaginationButtonComponent,
     LessMoreTextComponent,
-    BootstrapSimpleCardComponent
+    BootstrapSimpleCardComponent,
+    MovieDetailComponent,
+    LessMoreButtonComponent
   ],
   imports: [
     BrowserModule,

@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-12">
         <div class="row">
-          <div class="col-10" (click)="showDetail($event)">
+          <div class="col-10">
             <h3 class="hidden-sm-down">
               <a class="movie-show-detail" [attr.data-id]="data.id" data-toggle="collapse"
                  [attr.href]="'#movie' + data.id">{{data
@@ -31,10 +31,21 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-12">
+          <div class="col-10">
             <a *ngFor="let genre of data.genres" href="#">
               {{genre.name}}
             </a>
+          </div>
+          <div class="col-2 text-right" (click)="showDetail($event)">
+            <a *ngIf="!doShowDetail; else closeDetail" href="javascript:">
+              <span class="hidden-sm-down">More detail(s)</span>
+              <span class="hidden-md-up"><i class="fa fa-chevron-down"></i></span>
+            </a>
+            <ng-template #closeDetail>
+              <a href="javascript:"><span class="hidden-sm-down">Less detail</span>
+                <span class="hidden-md-up"><i class="fa fa-chevron-up"></i></span>
+              </a>
+            </ng-template>
           </div>
         </div>
       </div>
@@ -43,23 +54,6 @@
 </app-bootstrap-simple-card>
 <app-bootstrap-simple-card class="movie-detail" [attr.id]="'movie' + data.id" [class.show]="doShowDetail"
                            [class.collapse]="!doShowDetail">
-  <div class="container-fluid" *ngIf="data && data !== null">
-    <div class="row">
-      <div class="col-4">
-        <img [attr.src]="data.poster_url">
-      </div>
-      <div class="col-8">
-        <div class="row hidden-sm-down">
-          {{data.overview}}
-        </div>
-        <div class="row hidden-md-up">
-          <app-less-more-text [text]="overview"></app-less-more-text>
-        </div>
-        <div class="row">
-          Length: {{data.runtime}}
-        </div>
-      </div>
-    </div>
-  </div>
+  <app-movie-detail [data]="detailInfo$ | async"></app-movie-detail>
 </app-bootstrap-simple-card>
 

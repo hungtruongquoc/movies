@@ -1,4 +1,5 @@
 <div (click)="toggleShowFullOverview()">
+  <h6>{{title}}:</h6>
   <span *ngIf="!doShowFullOverview; else fullSmallOverview">
                 {{text | truncate: 30: '': true}} <a class="read-more" href="javascript:"> more ...</a>
               </span>

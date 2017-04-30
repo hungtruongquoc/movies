@@ -15,6 +15,9 @@ export class LessMoreTextComponent implements OnInit {
   @Input()
   text: string = '';
 
+  @Input()
+  title: string = '';
+
   doShowFullOverview: boolean = false;
 
   toggleShowFullOverview() {

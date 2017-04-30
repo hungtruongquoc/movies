@@ -17,13 +17,19 @@ export class MovieItemComponent implements OnInit, OnChanges {
 
   @Input()
   data: Movie = null;
-  movieDetailInfo$: Observable<any>;
+  overview$: Observable<any>;
+  detailInfo$: Observable<any>;
   doShowDetail: boolean = false;
   movieDetail$: Observable<IMovieDetail>;
 
   constructor(private renderer: Renderer2, private store: Store<IMovieDetail>, private movieActions: MovieStateActions) {
     this.movieDetail$ = store.select('movie');
-    this.movieDetailInfo$ = this.movieDetail$.map(detail => detail);
+    this.detailInfo$ = this.movieDetail$.map(detail =>{
+      if(detail.hasOwnProperty('movieDetails') && detail.movieDetails.hasOwnProperty(this.data.id)) {
+        return detail.movieDetails[this.data.id];
+      }
+      return null;
+    });
   }
 
   ngOnChanges() {
