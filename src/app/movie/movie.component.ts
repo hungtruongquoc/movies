@@ -3,7 +3,7 @@ import 'rxjs/add/operator/take';
 import * as moment from 'moment';
 
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild
 } from '@angular/core';
 
 import {Observable} from "rxjs/Observable";
@@ -86,5 +86,9 @@ export class MovieComponent implements OnInit {
 
   ngOnInit() {
     this.searchMovies();
+  }
+
+  changePage(newPage) {
+    this.store.dispatch(this.movieActions.loadMovieList(newPage));
   }
 }

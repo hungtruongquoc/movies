@@ -42,8 +42,9 @@ export class MovieEffects {
   @Effect()
   search$: Observable<Action> = this.actions$
     .ofType(MovieStateActions.LOAD_MOVIES)
-    .switchMap(() => {
-      return this.movies.searchMovies();
+    .map(action => action.payload)
+    .switchMap((newPage) => {
+      return this.movies.searchMovies(newPage);
     })
     .map(movies => this.movieAction.loadMovieListSuccess(movies))
     .catch(() => of(this.movieAction.loadMovieListSuccess([])));

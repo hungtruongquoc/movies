@@ -1,26 +1,30 @@
 <nav aria-label="Movie list navigation">
   <ul class="pagination justify-content-center">
-    <li app-pagination-button [ariaLabel]="'Previous'" (click)="pageClicked($event)"
-        [attr.disabled]="isButtonDisabled()" [class.disabled]="isButtonDisabled()">
-      <span aria-hidden="true">&laquo;</span>
+    <li app-pagination-button [ariaLabel]="'Previous'" (click)="pageClicked($event, currentPage - 1)"
+        [attr.disabled]="isPreviousButtonDisabled()" [class.disabled]="isPreviousButtonDisabled()">
+      <span aria-hidden="true"><i class="fa fa-chevron-left"></i></span>
       <span class="sr-only">Previous</span>
     </li>
-    <ng-container *ngFor="let pageNumber of leftPages">
-      <li app-pagination-button (click)="pageClicked($event)">
-        {{pageNumber + 1}}
-      </li>
-    </ng-container>
-    <li app-pagination-button (click)="pageClicked($event)">
+    <li app-pagination-button [class.active]="currentPage === 1" (click)="pageClicked($event, 1)">1</li>
+    <li app-pagination-button *ngIf="doShowLeftEllipsis()" (click)="pageClicked($event, currentPage - 1)">
       <i class="fa fa-fw fa-ellipsis-h"></i>
     </li>
-    <ng-container *ngFor="let pageNumber of rightPages">
-      <li app-pagination-button (click)="pageClicked($event)">
-        {{pageNumber + 1}}
+    <ng-container *ngFor="let page of pages">
+      <li app-pagination-button [class.active]="currentPage === page" *ngIf="page !== 1 && page !== totalPages"
+          (click)="pageClicked($event, page)">
+        {{page}}
       </li>
     </ng-container>
-    <li app-pagination-button [ariaLabel]="'Next'" [attr.disabled]="isButtonDisabled()"
-        [class.disabled]="isButtonDisabled()">
-      <span aria-hidden="true">&raquo;</span>
+    <li app-pagination-button *ngIf="doShowRightEllipsis()" (click)="pageClicked($event, currentPage + 1)">
+      <i class="fa fa-fw fa-ellipsis-h"></i>
+    </li>
+    <li app-pagination-button [class.active]="currentPage === totalPages"
+        (click)="pageClicked($event, totalPages)">
+      {{totalPages}}
+    </li>
+    <li app-pagination-button [ariaLabel]="'Next'" [attr.disabled]="isNextButtonDisabled()"
+        [class.disabled]="isNextButtonDisabled()" (click)="pageClicked($event, currentPage + 1)">
+      <span aria-hidden="true"><i class="fa fa-chevron-right"></i></span>
       <span class="sr-only">Next</span>
     </li>
   </ul>
