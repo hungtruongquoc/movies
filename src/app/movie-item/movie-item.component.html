@@ -3,22 +3,18 @@
     <div class="row">
       <div class="col-12">
         <div class="row">
-          <div class="col-10">
-            <h3 class="hidden-sm-down">
-              <a class="movie-show-detail" [attr.data-id]="data.id" data-toggle="collapse"
-                 [attr.href]="'#movie' + data.id">{{data
-                .title}}</a>
-            </h3>
-            <h5 class="hidden-md-up">
-              <a class="movie-show-detail" [attr.data-id]="data.id" data-toggle="collapse"
-                 [attr.href]="'#movie' + data.id">{{data.title}}</a>
-            </h5>
+          <div class="col-9">
+            <h3 class="hidden-sm-down">{{data.title}}</h3>
+            <h5 class="hidden-md-up">{{data.title}}</h5>
           </div>
-          <div class="col-2 text-right">
+          <div class="col-3 text-right">
             <h2 class="hidden-sm-down" [class.text-danger]="isNotGoodMovie()"
                 [class.text-success]="isGoodMovie()"
                 [class.text-warning]="isNormalMovie()">
-              {{data.vote_average | number:'1.1-1'}}</h2>
+              {{data.vote_average | number:'1.1-1'}}
+              <i class="fa fa-fw" [class.fa-smile-o]="isGoodMovie()" [class.fa-meh-o]="isNormalMovie()"
+                 [class.fa-frown-o]="isNotGoodMovie()"></i>
+            </h2>
             <h5 class="hidden-md-up" [class.text-danger]="isNotGoodMovie()"
                 [class.text-success]="isGoodMovie()"
                 [class.text-warning]="isNormalMovie()">
