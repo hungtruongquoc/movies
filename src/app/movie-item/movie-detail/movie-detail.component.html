@@ -9,9 +9,11 @@
         <p>{{data.overview}}</p>
       </div>
       <div class="row hidden-md-up">
-        <app-less-more-text [text]="data.overview" [title]="'Overview'"></app-less-more-text>
+        <div class="col-12">
+          <app-less-more-text [text]="data.overview" [title]="'Overview'"></app-less-more-text>
+        </div>
       </div>
-      <div class="row text-right">
+      <div class="row">
         <div class="col-12 col-sm-12 col-md-6">
           <h6>Box office earning: </h6> <p>{{data.revenue | currency:'USD':true:'1.2-2'}}</p>
         </div>
