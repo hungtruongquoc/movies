@@ -10,8 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "npm run build",
-    "preinstall": "rm -rf node_modules"
+    "postinstall": "ng build"
   },
   "repository": {
     "type": "git",
