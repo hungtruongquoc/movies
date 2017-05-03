@@ -4,9 +4,20 @@
       <img [attr.src]="data.poster_url">
     </div>
     <div class="col-8">
+      <div class="row">
+        <div class="col-10">
+          <h6 class="hidden-sm-down">Overview</h6>
+        </div>
+        <div class="col-2 text-right">
+          <a (click)="closeButtonClicked($event)" href="javascript:" class="detail-close-button">
+            <i class="fa fa-fw fa-close"></i>
+          </a>
+        </div>
+      </div>
       <div class="row hidden-sm-down">
-        <h6>Overview:</h6>
-        <p>{{data.overview}}</p>
+        <div class="col-12">
+          <p>{{data.overview}}</p>
+        </div>
       </div>
       <div class="row hidden-md-up">
         <div class="col-12">

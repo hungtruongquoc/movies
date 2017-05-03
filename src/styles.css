@@ -6,6 +6,7 @@ html {
 }
 body {
   min-height: 100%;
+  background-color: #f2f2f2;
 }
 .footer {
   position: absolute;
@@ -32,4 +33,23 @@ body {
 
 .container-no-content{
   min-height: 500px;
+}
+
+app-movie-item > app-bootstrap-simple-card:nth-child(1).show-detail > div.card {
+  background-color:lightgoldenrodyellow;
+  border-bottom: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+  -moz-box-shadow:    3px 3px 5px 6px #ccc;  /* Firefox 3.5 - 3.6 */
+  box-shadow:         3px 3px 5px 6px #ccc;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+}
+
+app-movie-item > app-bootstrap-simple-card:nth-child(2) > div.card {
+  border-top: 0;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+  -moz-box-shadow:    3px 3px 5px 6px #ccc;  /* Firefox 3.5 - 3.6 */
+  box-shadow:         3px 3px 5px 6px #ccc;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
 }

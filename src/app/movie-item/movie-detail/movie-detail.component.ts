@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, EventEmitter, Output} from '@angular/core';
 import {Observable} from "rxjs/Observable";
 
 @Component({
@@ -10,10 +10,18 @@ export class MovieDetailComponent implements OnInit {
 
   constructor() { }
 
+  @Output()
+  closeButtonClick: EventEmitter<any> = new EventEmitter();
+
   @Input()
   data: Observable<any>;
 
   ngOnInit() {
+  }
+
+  closeButtonClicked(event) {
+    event.preventDefault();
+    this.closeButtonClick.emit(event);
   }
 
 }
