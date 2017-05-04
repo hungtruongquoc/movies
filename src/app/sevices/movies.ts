@@ -25,7 +25,7 @@ export class MovieService {
   searchMovies(page: number = 1): Observable<Movie[]> {
     console.log('Load top rated movies ');
     let currentYear = moment().year() + '-1-1';
-    let searchUrl = `${MovieService.API_PATH}/discover/movie?api_key=${MovieService.API_KEY}&language=en-US&&page=${page}&region=US&sort_by=vote_average.desc&vote_average.gte=1&release_date.gte=${currentYear}&vote_count.gte=10`;
+    let searchUrl = `${MovieService.API_PATH}/discover/movie?api_key=${MovieService.API_KEY}&language=en-US&&page=${page}&region=US&sort_by=vote_average.desc&vote_average.gte=1&release_date.gte=${currentYear}&vote_count.gte=100`;
     return this.http.get(searchUrl).map(res => {
       console.log('Top rated list result is: ', res);
       return res.json() || [];
@@ -39,7 +39,7 @@ export class MovieService {
       return Observable.of(Object.create({})).map(data => movieId.loadedMovie);
     }
     else {
-      let detailUrl = `${MovieService.API_PATH}/movie/${movieId}?api_key=${MovieService.API_KEY}&language=en-US`;
+      let detailUrl = `${MovieService.API_PATH}/movie/${movieId}?api_key=${MovieService.API_KEY}&language=en-US&append_to_response=credits,reviews,genres,keywords`;
       return this.http.get(detailUrl).map(res => {
         console.log('Selected movie data from API: ', res);
         return res.json() || null;

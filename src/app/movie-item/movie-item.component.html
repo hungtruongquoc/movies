@@ -28,6 +28,7 @@
                 [class.text-success]="isGoodMovie()"
                 [class.text-warning]="isNormalMovie()">
               {{data.vote_average | number:'1.1-1'}}
+              <i class="fa fa-fw fa-user-circle-o"></i> {{data.vote_count | number:'1.0-0'}}
             </h5>
           </div>
         </div>

@@ -26,10 +26,40 @@
       </div>
       <div class="row">
         <div class="col-12 col-sm-12 col-md-6">
-          <h6>Box office earning: </h6> <p>{{data.revenue | currency:'USD':true:'1.2-2'}}</p>
+          <h6><i class="fa fa-fw fa-ticket"></i> {{data.revenue | currency:'USD':true:'1.2-2'}}</h6>
         </div>
         <div class="col-12 col-sm-12 col-md-6">
-          <h6>Length:</h6> {{data.runtime}} minute(s)
+          <h6><i class="fa fa-fw fa-clock-o"></i> {{data.runtime}} minute(s)</h6>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-6">
+          <h6><i class="fa fa-fw fa-bullhorn"></i> {{data.credits.crew[0].name}}</h6>
+        </div>
+        <div class="col-12 col-sm-12 col-md-6">
+          <ul class="fa-ul">
+            <li *ngFor="let caster of data.credits.cast; let i = index" [style.display]="i > 2 ? 'none': 'block'">
+              <i class="fa-li fa fa-user-o"></i> {{caster.name}} ({{caster.character}})
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-sm-6">
+          <h6>Votes: <i class="fa fa-fw fa-user-circle-o"></i> {{data.vote_count | number:'1.0-0'}}</h6>
+        </div>
+        <div class="col-12 col-sm-6">
+          <h6>Reviews <i class="fa fa-fw fa-user-circle-o"></i> {{data.reviews.total_results | number:'1.0-0'}}</h6>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <h6>Related keywords: </h6>
+          <ul class="list-inline">
+            <li *ngFor="let keyword of data.keywords.keywords" class="list-inline-item">
+              <i class="fa fa-fw fa-tag"></i> {{keyword.name}}
+            </li>
+          </ul>
         </div>
       </div>
     </div>
