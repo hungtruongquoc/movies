@@ -52,7 +52,9 @@ export class MovieService {
         let result = res.json();
         result.poster_url = this.application.getSmallPosterUrl(result.poster_path);
         result.poster_url_large = this.application.getLargePoasterUrl(result.poster_path);
-        result.credits.cast = _.take(result.credits.cast, 3);
+        result.credits.mainArtists = _.take(result.credits.cast, 3);
+        result.credits.director = _.take(result.credits.crew, 1)[0];
+        debugger;
         return result || null;
       }, this);
     }

@@ -3,7 +3,8 @@ import 'rxjs/add/operator/take';
 import * as moment from 'moment';
 
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild
+  AfterViewInit,
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild
 } from '@angular/core';
 
 import {Observable} from "rxjs/Observable";
@@ -12,6 +13,7 @@ import {Store} from "@ngrx/store";
 import {MovieStateActions} from "../actions/movie";
 import {IMovieSearchResult} from "../common/Types";
 import {ApplicationService} from "../sevices/application";
+import {BaseComponent, ISearchable} from "../common/base/base.component";
 
 
 @Component({
@@ -20,7 +22,7 @@ import {ApplicationService} from "../sevices/application";
   styleUrls: ['./movie.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MovieComponent implements OnInit {
+export class MovieComponent extends BaseComponent implements OnInit, AfterViewInit, ISearchable {
 
   movies$: Observable<Movie[]>;
   currentPage$: Observable<number>;
@@ -30,8 +32,9 @@ export class MovieComponent implements OnInit {
   @Input()
   searching: Observable<boolean>;
 
-  constructor(private cd: ChangeDetectorRef, private movieActions: MovieStateActions,
+  constructor(private cd: ChangeDetectorRef, private movieActions: MovieStateActions, el: ElementRef,
               private store: Store<IMovieSearchResult>, private application: ApplicationService) {
+    super(el);
     this.movieState = this.store.select('movie');
     console.log('Get movie store object', this.movieState);
     // Extracts current page
@@ -88,7 +91,15 @@ export class MovieComponent implements OnInit {
     this.searchMovies();
   }
 
+  ngAfterViewInit() {
+    this.raiseInitEvent();
+  }
+
   changePage(newPage) {
     this.store.dispatch(this.movieActions.loadMovieList(newPage));
+  }
+
+  search(text: string) {
+    console.log(text);
   }
 }
