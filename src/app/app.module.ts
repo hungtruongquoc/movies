@@ -29,6 +29,9 @@ import { LessMoreTextComponent } from './common/less-more-text/less-more-text.co
 import { BootstrapSimpleCardComponent } from './common/bootstrap-simple-card/bootstrap-simple-card.component';
 import { MovieDetailComponent } from './movie-item/movie-detail/movie-detail.component';
 import { LessMoreButtonComponent } from './common/less-more-button/less-more-button.component';
+import { SearchComponent } from './common/search/search.component';
+import { BaseComponent } from './common/base/base.component';
+import { ListviewComponent } from './common/listview/listview.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: 'movies', pathMatch: 'full'},
@@ -52,7 +55,10 @@ const appRoutes: Routes = [
     LessMoreTextComponent,
     BootstrapSimpleCardComponent,
     MovieDetailComponent,
-    LessMoreButtonComponent
+    LessMoreButtonComponent,
+    SearchComponent,
+    BaseComponent,
+    ListviewComponent
   ],
   imports: [
     BrowserModule,

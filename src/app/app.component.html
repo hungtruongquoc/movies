@@ -1,5 +1,10 @@
 <app-nav></app-nav>
 <div class="container" [ngClass]="{'container-no-content': preLoadingCompleted | async}">
+  <div class="row">
+    <div class="col-12">
+      <app-search (textChange)="searchData($event)"></app-search>
+    </div>
+  </div>
   <router-outlet></router-outlet>
   <div class="row full-container-spinner" *ngIf="preLoadingCompleted | async">
     <div class="col-12 text-center" style="margin: auto">

@@ -5,6 +5,8 @@ import {Observable} from "rxjs/Observable";
 import {LOAD_CONFIG} from "./reducers/index";
 import {AppStateActions} from "./actions/application";
 import {ApplicationService} from "./sevices/application";
+import {NavigationEnd, Router} from "@angular/router";
+import {ISearchable} from "./common/base/base.component";
 
 @Component({
   selector: 'app-root',
@@ -17,6 +19,7 @@ export class AppComponent implements OnInit {
   preLoadingCompleted: Observable<boolean>;
   appState: Observable<IAppConfiguration>;
   genreList: Observable<any>;
+  dataSource: ISearchable = null;
 
   constructor(private cd: ChangeDetectorRef, private appActions: AppStateActions,
               private store: Store<IAppConfiguration>, private application: ApplicationService) {
@@ -50,10 +53,19 @@ export class AppComponent implements OnInit {
       console.log('Set base url for images', baseUrl);
       this.application.imageBaseUrl = baseUrl;
     });
+    window.addEventListener('dataItemViewInit', function(event: CustomEvent) {
+      this.dataSource = event.detail;
+    }.bind(this))
   }
 
   ngOnInit(){
     console.log('Dispatches the load config action');
     this.store.dispatch(this.appActions.loadConfiguration());
+  }
+
+  searchData(searchText){
+    if(this.dataSource !== null) {
+      this.dataSource.search(searchText);
+    }
   }
 }
