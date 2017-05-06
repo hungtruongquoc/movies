@@ -7,6 +7,8 @@ import {Movie} from "../models/movie";
 import 'rxjs/operator/combineAll';
 import * as moment from 'moment';
 import {Action} from "@ngrx/store";
+import {ApplicationService} from "./application";
+import * as _ from 'lodash';
 
 @Injectable()
 export class MovieService {
@@ -19,7 +21,7 @@ export class MovieService {
   imageBaseUrl: string = '';
   defaultSize: string = '';
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private application: ApplicationService) {
   }
 
   searchMovies(page: number = 1): Observable<Movie[]> {
@@ -28,8 +30,13 @@ export class MovieService {
     let searchUrl = `${MovieService.API_PATH}/discover/movie?api_key=${MovieService.API_KEY}&language=en-US&&page=${page}&region=US&sort_by=vote_average.desc&vote_average.gte=1&release_date.gte=${currentYear}&vote_count.gte=100`;
     return this.http.get(searchUrl).map(res => {
       console.log('Top rated list result is: ', res);
-      return res.json() || [];
-    });
+      let result = res.json();
+      result.results.forEach((item) => {
+        item.poster_url = this.application.imageBaseUrl + '/w185/' + item.poster_path;
+        return item;
+      }, this);
+      return result;
+    }, this);
   }
 
   retrieveMovie(movieId): Observable<any> {
@@ -42,8 +49,12 @@ export class MovieService {
       let detailUrl = `${MovieService.API_PATH}/movie/${movieId}?api_key=${MovieService.API_KEY}&language=en-US&append_to_response=credits,reviews,genres,keywords`;
       return this.http.get(detailUrl).map(res => {
         console.log('Selected movie data from API: ', res);
-        return res.json() || null;
-      });
+        let result = res.json();
+        result.poster_url = this.application.getSmallPosterUrl(result.poster_path);
+        result.poster_url_large = this.application.getLargePoasterUrl(result.poster_path);
+        result.credits.cast = _.take(result.credits.cast, 3);
+        return result || null;
+      }, this);
     }
   }
 

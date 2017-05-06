@@ -1,7 +1,8 @@
 <div class="container-fluid" *ngIf="data && data !== null">
   <div class="row">
     <div class="col-4">
-      <img [attr.src]="data.poster_url">
+      <img class="hidden-lg-up" [attr.src]="data.poster_url">
+      <img class="hidden-md-down" [attr.src]="data.poster_url_large">
     </div>
     <div class="col-8">
       <div class="row">
@@ -10,7 +11,7 @@
         </div>
         <div class="col-2 text-right">
           <a (click)="closeButtonClicked($event)" href="javascript:" class="detail-close-button">
-            <i class="fa fa-fw fa-close"></i>
+            <i class="fa fa-fw fa-2x fa-close"></i>
           </a>
         </div>
       </div>
@@ -38,7 +39,7 @@
         </div>
         <div class="col-12 col-sm-12 col-md-6">
           <ul class="fa-ul">
-            <li *ngFor="let caster of data.credits.cast; let i = index" [style.display]="i > 2 ? 'none': 'block'">
+            <li *ngFor="let caster of data.credits.cast; let i = index">
               <i class="fa-li fa fa-user-o"></i> {{caster.name}} ({{caster.character}})
             </li>
           </ul>

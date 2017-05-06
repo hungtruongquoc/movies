@@ -12,6 +12,21 @@ export class ApplicationService {
     })[0];
     return selectedItem;
   }
+
+  public getSmallPosterUrl(posterPath: string = '') {
+    if(posterPath !== '') {
+      return this.imageBaseUrl + '/w185/' + posterPath;
+    }
+    return '';
+  }
+
+  public getLargePoasterUrl(posterPath: string = '') {
+    if(posterPath !== ''){
+      return this.imageBaseUrl + '/w342/' + posterPath;
+    }
+    return ''
+  }
+
   public genreName(genreId: number) {
    let object = this.getGenreObj(genreId);
    if(object !== null) {
