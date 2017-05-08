@@ -5,6 +5,8 @@ export function movieState(state: any = INITIAL_MOVIES , action: Action){
   console.log('Reducer movieState is executed with action ', action.type);
   console.log('Payload is ', action.payload);
   switch(action.type) {
+    case MovieStateActions.LOAD_MOVIES:
+      return Object.assign({}, state, action.payload);
     case MovieStateActions.LOAD_MOVIES_SUCCESS:
       return Object.assign({}, state, action.payload);
     case MovieStateActions.LOAD_MOVIE:

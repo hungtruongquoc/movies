@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
   appState: Observable<IAppConfiguration>;
   genreList: Observable<any>;
   dataSource: ISearchable = null;
+  isSearchDisabled: boolean = false;
 
   constructor(private cd: ChangeDetectorRef, private appActions: AppStateActions,
               private store: Store<IAppConfiguration>, private application: ApplicationService) {
@@ -61,11 +62,5 @@ export class AppComponent implements OnInit {
   ngOnInit(){
     console.log('Dispatches the load config action');
     this.store.dispatch(this.appActions.loadConfiguration());
-  }
-
-  searchData(searchText){
-    if(this.dataSource !== null) {
-      this.dataSource.search(searchText);
-    }
   }
 }

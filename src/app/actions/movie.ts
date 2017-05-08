@@ -4,10 +4,10 @@ export const INITIAL_MOVIES = {};
 
 export class MovieStateActions {
   static LOAD_MOVIES = '[Movies] Load Movie List';
-  loadMovieList(newPage = 1): Action {
+  loadMovieList(newPage = 1, searchText = null): Action {
     return {
       type: MovieStateActions.LOAD_MOVIES,
-      payload: newPage
+      payload: {page: newPage, currentSearchText: searchText}
     }
   }
   static LOAD_MOVIES_SUCCESS = '[Movies] Load Movie List Success';

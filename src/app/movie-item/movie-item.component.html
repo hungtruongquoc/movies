@@ -1,46 +1,57 @@
-<app-bootstrap-simple-card [class.show-detail]="doShowDetail ? true : null">
+<app-bootstrap-simple-card [class.show-detail]="doShowDetail ? true : null" *ngIf="!isHidden">
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
         <div class="row">
           <div class="col-9">
-            <h3 class="hidden-sm-down">{{data.title}}</h3>
-            <h5 class="hidden-md-up">{{data.title}}</h5>
+            <h3 class="hidden-sm-down">
+              <img *ngIf="!doShowDetail" [attr.src]="data.logo_url" class="rounded-circle">
+              {{data.title}}
+            </h3>
+            <h5 class="hidden-md-up">
+              <img *ngIf="!doShowDetail" [attr.src]="data.logo_url" class="rounded-circle">
+              {{data.title}}
+            </h5>
           </div>
-          <div class="col-3 text-right">
+          <div class="col-3 text-center">
             <h6 class="hidden-sm-down text-muted">Average vote (out of 10):</h6>
             <h6 class="hidden-md-up">Avg. vote</h6>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-9">
-            <p>Released on {{data.formattedReleaseDate}}, {{data.releaseDuration}}</p>
-          </div>
-          <div class="col-3 text-right">
-            <h2 class="hidden-sm-down" [class.text-danger]="isNotGoodMovie()"
+            <h2 class="hidden-sm-down rounded text-white text-center" [class.bg-danger]="isNotGoodMovie()"
+                [class.bg-success]="isGoodMovie()"
+                [class.bg-warning]="isNormalMovie()">
+              {{data.vote_average | number:'1.1-1'}}
+            </h2>
+            <h2 class="hidden-md-up" [class.text-danger]="isNotGoodMovie()"
                 [class.text-success]="isGoodMovie()"
                 [class.text-warning]="isNormalMovie()">
               <i class="fa fa-fw" [class.fa-smile-o]="isGoodMovie()" [class.fa-meh-o]="isNormalMovie()"
                  [class.fa-frown-o]="isNotGoodMovie()"></i>
               {{data.vote_average | number:'1.1-1'}}
             </h2>
-            <h5 class="hidden-md-up" [class.text-danger]="isNotGoodMovie()"
-                [class.text-success]="isGoodMovie()"
-                [class.text-warning]="isNormalMovie()">
-              {{data.vote_average | number:'1.1-1'}}
-              <i class="fa fa-fw fa-user-circle-o"></i> {{data.vote_count | number:'1.0-0'}}
-            </h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <p [class.text-danger]="data.isRecent">
+              Released on {{data.formattedReleaseDate}}, <strong>{{data.releaseDuration}}</strong>
+              <i *ngIf="data.isRecent" class="fa fa-fw fa-fire"></i>
+            </p>
           </div>
         </div>
         <div class="row">
           <div class="col-9">
-            <a *ngFor="let genre of data.genres" href="#">
-              {{genre.name}}
-            </a>
+            <ng-container *ngIf="data.genres && data.genres.length > 0">
+
+                <ng-container *ngFor="let genre of data.genres">
+                  <a *ngIf="genre"  href="javascript:">
+                    {{genre.name}}
+                  </a>
+                </ng-container>
+            </ng-container>
           </div>
-          <div class="col-3 text-right" (click)="showDetail($event)">
+          <div class="col-3 text-right" (click)="showDetail(data.id, $event)">
             <a *ngIf="!doShowDetail" href="javascript:">
-              <span class="hidden-sm-down">More detail(s)</span>
+              <span class="hidden-sm-down">View detail(s)</span>
               <span class="hidden-md-up"><i class="fa fa-fw fa-ellipsis-h"></i></span>
             </a>
           </div>
@@ -48,9 +59,5 @@
       </div>
     </div>
   </div>
-</app-bootstrap-simple-card>
-<app-bootstrap-simple-card class="movie-detail" [attr.id]="'movie' + data.id" [class.show]="doShowDetail"
-                           [class.collapse]="!doShowDetail">
-  <app-movie-detail (closeButtonClick)="doShowDetail = false" [data]="detailInfo$ | async"></app-movie-detail>
 </app-bootstrap-simple-card>
 

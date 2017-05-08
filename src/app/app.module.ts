@@ -13,29 +13,20 @@ import {MovieService} from './sevices/movies';
 import {AppComponent} from './app.component';
 import {NavComponent} from './nav/nav.component';
 import {FooterComponent} from './footer/footer.component';
-import {MovieComponent} from './movie/movie.component';
 import {NotFoundPageComponent} from "./common/no-found-page";
-import {MovieItemComponent} from './movie-item/movie-item.component';
 import {Actions, EffectsModule} from "@ngrx/effects";
 import {MovieEffects} from "./effects/movie";
 import {AppStateActions} from "./actions/application";
 import {AppEffects} from "./effects/application";
 import {MovieStateActions} from "./actions/movie";
 import {ApplicationService} from "./sevices/application";
-import { PaginationComponent } from './pagination/pagination.component';
-import { PaginationButtonComponent } from './pagination/pagination-button/pagination-button.component';
-import {NgPipesModule} from "angular-pipes";
-import { LessMoreTextComponent } from './common/less-more-text/less-more-text.component';
-import { BootstrapSimpleCardComponent } from './common/bootstrap-simple-card/bootstrap-simple-card.component';
-import { MovieDetailComponent } from './movie-item/movie-detail/movie-detail.component';
-import { LessMoreButtonComponent } from './common/less-more-button/less-more-button.component';
-import { SearchComponent } from './common/search/search.component';
 import { BaseComponent } from './common/base/base.component';
-import { ListviewComponent } from './common/listview/listview.component';
+import { IndexComponent } from './index/index.component';
+import { LoginComponent } from './login/login.component';
+import {MovieModule} from "./movie/movie.module";
 
 const appRoutes: Routes = [
-  {path: '', redirectTo: 'movies', pathMatch: 'full'},
-  {path: 'movies', component: MovieComponent},
+  {path: '', redirectTo: '/movies', pathMatch: 'full'},
   {
     path: '**',
     component: NotFoundPageComponent
@@ -47,18 +38,10 @@ const appRoutes: Routes = [
     AppComponent,
     NavComponent,
     FooterComponent,
-    MovieComponent,
     NotFoundPageComponent,
-    MovieItemComponent,
-    PaginationComponent,
-    PaginationButtonComponent,
-    LessMoreTextComponent,
-    BootstrapSimpleCardComponent,
-    MovieDetailComponent,
-    LessMoreButtonComponent,
-    SearchComponent,
     BaseComponent,
-    ListviewComponent
+    IndexComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -86,7 +69,7 @@ const appRoutes: Routes = [
      */
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
     RouterModule.forRoot(appRoutes),
-    NgPipesModule
+    MovieModule
   ],
   providers: [MovieService, AppStateActions, MovieStateActions, ApplicationService],
   bootstrap: [AppComponent]

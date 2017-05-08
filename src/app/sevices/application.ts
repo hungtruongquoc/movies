@@ -27,11 +27,24 @@ export class ApplicationService {
     return ''
   }
 
+  public getLogoUrl(posterPath: string) {
+    if(posterPath !== ''){
+      return this.imageBaseUrl + '/w45/' + posterPath;
+    }
+    return ''
+  }
+
   public genreName(genreId: number) {
    let object = this.getGenreObj(genreId);
    if(object !== null) {
      return object.name;
    }
    return null;
+  }
+
+  public convertGenreIdsToGenreArray(idArray: number[]){
+    return idArray.map((item) => {
+      return this.getGenreObj(item);
+    }, this);
   }
 }

@@ -4,7 +4,8 @@ import * as moment from 'moment';
 
 import {
   AfterViewInit,
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChildren,
+  QueryList
 } from '@angular/core';
 
 import {Observable} from "rxjs/Observable";
@@ -14,6 +15,7 @@ import {MovieStateActions} from "../actions/movie";
 import {IMovieSearchResult} from "../common/Types";
 import {ApplicationService} from "../sevices/application";
 import {BaseComponent, ISearchable} from "../common/base/base.component";
+import {MovieItemComponent} from "../movie-item/movie-item.component";
 
 
 @Component({
@@ -23,83 +25,49 @@ import {BaseComponent, ISearchable} from "../common/base/base.component";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MovieComponent extends BaseComponent implements OnInit, AfterViewInit, ISearchable {
-
-  movies$: Observable<Movie[]>;
-  currentPage$: Observable<number>;
-  movieState: Observable<IMovieSearchResult>;
-  totalPages$: Observable<number>;
+  private currentText: string = null;
 
   @Input()
   searching: Observable<boolean>;
 
+  @ViewChildren(MovieItemComponent)
+  items: QueryList<MovieItemComponent>;
+
   constructor(private cd: ChangeDetectorRef, private movieActions: MovieStateActions, el: ElementRef,
               private store: Store<IMovieSearchResult>, private application: ApplicationService) {
     super(el);
-    this.movieState = this.store.select('movie');
-    console.log('Get movie store object', this.movieState);
-    // Extracts current page
-    this.currentPage$ = this.movieState.map((state) => {
-      console.log('Extract current page:', state.page);
-      return state.page;
-    });
-    // Extracts total number of pages
-    this.totalPages$ = this.movieState.map((state) => {
-      console.log('Extract total number of pages:', state.total_pages);
-      return state.total_pages;
-    });
-    // Extracts movie list
-    this.movies$ = this.movieState.map((state) => {
-      console.log('Received top rated movie list: ', state.results);
-      console.log('Updates base url for images');
-      console.log('Updates genre name');
-      let appInfo = this.application;
-      let getUrl = (defaultSize, path) => {
-        return appInfo.imageBaseUrl + defaultSize + path;
-      };
-      if(state.results) {
-        // Performs some transformation for data
-        state.results.forEach((item) => {
-          // Builds backdrop URL
-          item.backdrop_url = getUrl('w780', item.backdrop_path);
 
-          // Builds poster URL
-          item.poster_url = getUrl('w92', item.poster_path);
-          // Injects genre information
-          item.genres = item.genre_ids.map((item) => {
-            return appInfo.getGenreObj(item);
-          });
-          item.genres.sort((genre1, genre2) => {
-            return genre1.name > genre2.name;
-          });
-        });
-      }
-      else {
-        state.results = [];
-      }
-      console.log(state.results);
-        return state.results;
-      }
-    );
-  }
-
-  searchMovies() {
-    console.log('Dispatches the load movie search result list action');
-    this.store.dispatch(this.movieActions.loadMovieList());
   }
 
   ngOnInit() {
-    this.searchMovies();
+    this.loadMovieList();
   }
 
   ngAfterViewInit() {
     this.raiseInitEvent();
+    console.log(this.items, ' children');
   }
 
-  changePage(newPage) {
-    this.store.dispatch(this.movieActions.loadMovieList(newPage));
-  }
 
   search(text: string) {
-    console.log(text);
+    this.currentText = text;
+    this.loadMovieList(1, text);
+  }
+
+  loadMovieList(page: number = 1, searchText: string = '') {
+    console.log('Dispatches the load movie search result list action');
+    this.store.dispatch(this.movieActions.loadMovieList(page, searchText));
+  }
+
+
+  processItemsDisplay(data){
+    this.items.forEach((item, index) => {
+      if(data.detailIsShown === true) {
+        item.isHidden = data.index !== index;
+      }
+      else {
+        item.isHidden = false;
+      }
+    })
   }
 }

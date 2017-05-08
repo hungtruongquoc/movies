@@ -1,4 +1,6 @@
 <div class="form-group">
-  <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Type to search"
+  <input #input type="email" class="form-control" [class.disabled]="isDisabled" id="exampleInputEmail1"
+         placeholder="Type to search"
+         [value]="searchText"
          (input)="emitValue($event.target.value)">
 </div>

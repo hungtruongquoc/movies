@@ -1,5 +1,5 @@
 <div (click)="toggleShowFullOverview()">
-  <h6>{{title}}:</h6>
+  <h5 *ngIf="title !== ''">{{title}}:</h5>
   <span *ngIf="!doShowFullOverview; else fullSmallOverview">
                 {{text | truncate: 30: '': true}} <a class="read-more" href="javascript:"> <small>...more</small></a>
               </span>

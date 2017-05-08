@@ -1,0 +1,52 @@
+<div class="row" class="border-top-0">
+  <div class="col-12">
+    <div class="row p-1">
+      <div class="col-12">
+        <a [routerLink]="['/movies', movieId]"><i class="fa fa-fw fa-chevron-left"></i> Back to detail</a>
+      </div>
+    </div>
+    <div class="row p-1">
+      <div class="col-12 bg-faded">
+        <div class-="container-fluid">
+          <form>
+            <div class="row">
+              <div class="form-group col-12 col-sm-12 col-md-5">
+                <label class="col-form-label" for="rating">Cast your vote: {{rate}} </label>
+                <input #rateInput value="0" type="range" id="rating" class="form-control" max="10"
+                       (change)="rate = rateInput.value"
+                       (input)="rate = rateInput.value"
+                       aria-describedby="rating-help">
+                <small id="rating-help" class="text-muted">
+                  Rating from 1 - 10
+                </small>
+              </div>
+              <div class="form-group col-12 col-sm-12 col-md-5">
+                <label class="col-form-label" for="review">Write your review</label>
+                <textarea class="form-control" id="review" rows="3"></textarea>
+              </div>
+              <div class="form-group col-12 col-sm-12 col-md-2">
+                <button disabled style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%)"
+                        type="button"
+                        class="btn btn-primary disabled">Submit
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <h5 class="p-1 bg-info text-white rounded">Reviews - {{(data|async)?.total_results}}</h5>
+      </div>
+    </div>
+    <div class="row p-1" *ngFor="let review of (data|async)?.results">
+      <div class="col-12">
+        <app-review-item>
+          <p class="comment-content">{{review.content}}</p>
+          <span class="comment-footer">{{review.author}}</span>
+        </app-review-item>
+      </div>
+    </div>
+  </div>
+</div>

@@ -10,6 +10,9 @@ export class ListviewComponent implements OnInit {
   @Output()
   pageChanged: EventEmitter<number> = new EventEmitter();
 
+  @Input()
+  hidePaginationComponent: boolean = false;
+
   constructor() { }
 
   ngOnInit() {
