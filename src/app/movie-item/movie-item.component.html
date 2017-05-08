@@ -41,9 +41,8 @@
         <div class="row">
           <div class="col-9">
             <ng-container *ngIf="data.genres && data.genres.length > 0">
-
                 <ng-container *ngFor="let genre of data.genres">
-                  <a *ngIf="genre"  href="javascript:">
+                  <a *ngIf="genre"  [routerLink]="['/movies']" [queryParams]="{'genre': genre.name}">
                     {{genre.name}}
                   </a>
                 </ng-container>
